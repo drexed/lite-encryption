@@ -1,8 +1,10 @@
 # Lite::Encryption
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/lite/encryption`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Gem Version](https://badge.fury.io/rb/lite-encryption.svg)](http://badge.fury.io/rb/lite-encryption)
+[![Build Status](https://travis-ci.org/drexed/lite-encryption.svg?branch=master)](https://travis-ci.org/drexed/lite-encryption)
 
-TODO: Delete this and the text above, and describe your gem
+Lite::Encryption is a library for encrypting and decrypting Ruby and Rails objects using the
+ActiveSupport::MessageEncryptor class.
 
 ## Installation
 
@@ -20,9 +22,32 @@ Or install it yourself as:
 
     $ gem install lite-encryption
 
-## Usage
+## Table of Contents
 
-TODO: Write usage instructions here
+* [Configurations](#configurations)
+
+## Configurations
+
+`rails g lite:encryption:install` will generate the following file:
+`../config/initalizers/lite_encryption.rb`
+
+```ruby
+Lite::Encryption.configure do |config|
+  config.secret_key_base = nil
+  config.secret_key_salt = nil
+end
+```
+
+`secret_key_base` and `secret_key_salt` should be supplied via environment variables or a secret
+management system.
+
+To generate a `secret_key_base`, execute `bundle exec rails secret` in the terminal prompt.
+To generate a `secret_key_salt`, execute the following command in the Rails console prompt:
+```ruby
+SecureRandom.random_bytes(
+  ActiveSupport::MessageEncryptor.key_len
+)
+```
 
 ## Development
 

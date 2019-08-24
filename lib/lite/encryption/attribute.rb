@@ -2,8 +2,8 @@
 
 module Lite
   module Encryption
+    module Attribute
 
-    VERSION ||= '1.0.0'
-
+    end
   end
 end

@@ -1,8 +1,7 @@
-require "lite/encryption/version"
+# frozen_string_literal: true
 
-module Lite
-  module Encryption
-    class Error < StandardError; end
-    # Your code goes here...
-  end
+%w[version configuration message attribute].each do |filename|
+  require "lite/encryption/#{filename}"
 end
+
+require 'generators/lite/encryption/install_generator'

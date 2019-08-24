@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'active_support'
+
 module Lite
   module Encryption
+    class Message
 
-    VERSION ||= '1.0.0'
-
+    end
   end
 end
