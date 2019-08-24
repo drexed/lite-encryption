@@ -3,8 +3,8 @@
 [![Gem Version](https://badge.fury.io/rb/lite-encryption.svg)](http://badge.fury.io/rb/lite-encryption)
 [![Build Status](https://travis-ci.org/drexed/lite-encryption.svg?branch=master)](https://travis-ci.org/drexed/lite-encryption)
 
-Lite::Encryption is a library for encrypting and decrypting Ruby and Rails objects using the
-ActiveSupport::MessageEncryptor class.
+Lite::Encryption is a ActiveSupport::MessageEncryptor wrapper library for encrypting and decrypting
+PORO objects and model attributes.
 
 ## Installation
 
