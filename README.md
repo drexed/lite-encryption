@@ -25,6 +25,8 @@ Or install it yourself as:
 ## Table of Contents
 
 * [Configurations](#configurations)
+* [Message](#message)
+* [Attribute](#attribute)
 
 ## Configurations
 
@@ -47,6 +49,49 @@ To generate a `secret_key_salt`, execute the following command in the Rails cons
 SecureRandom.random_bytes(
   ActiveSupport::MessageEncryptor.key_len
 )
+```
+
+## Message
+
+The message class is the wrapper class for `ActiveSupport::MessageEncryptor` so you can pass it
+accepted options.
+
+```ruby
+Lite::Encryption::Message.encrypt('decrypted_text', purpose: 'sec-pur')
+Lite::Encryption::Message.decrypt('==encrypted_text')
+
+# - or -
+
+service = Lite::Encryption::Message.new
+
+service.encrypt('decrypted_text', expires_in: 2.hours)
+service.decrypt('==encrypted_text')
+```
+
+## Attribute
+
+The attribute module provides a handy method for encrypting and decrypting attributes.
+You must add an `encrypted_*[column_name]` attribute to your database table like
+`encrypted_number`. You can then add code like the following for it to automatically
+encrypt and decrypt your values.
+
+```ruby
+class CreditCard < ActiveRecord::Base
+  extend Lite::Encryption::Attribute
+
+  attr_encrypt :number, :cvv, purpose: 'payment-menthod'
+
+end
+```
+
+You can then access attributes using the following:
+
+```ruby
+credit_card = CreditCard.create(number: '1234')
+
+credit_card.encrypted_number #=> '==encrypted_text'
+credit_card.decrypted_number #=> '1234'
+credit_card.number           #=> '1234'
 ```
 
 ## Development

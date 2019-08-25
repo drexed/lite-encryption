@@ -20,6 +20,8 @@ Metrics/BlockLength:
     - '*.gemspec'
 Metrics/ModuleLength:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/ExpandPathArguments:

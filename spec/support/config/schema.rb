@@ -14,7 +14,7 @@ ActiveRecord::Migration.verbose = false
 
 ActiveRecord::Schema.define(version: 1) do
   create_table :credit_cards, force: true do |t|
-    t.string :number
+    t.string :encrypted_number
     t.timestamps null: false
   end
 end

@@ -4,6 +4,6 @@ class CreditCard < ActiveRecord::Base
 
   extend Lite::Encryption::Attribute
 
-  # attr_encrypt :number
+  attr_encrypt :number, :cvv, purpose: 'secret-purpose'
 
 end
