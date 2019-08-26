@@ -35,15 +35,18 @@ Or install it yourself as:
 
 ```ruby
 Lite::Encryption.configure do |config|
-  config.secret_key_base = nil
-  config.secret_key_salt = nil
+  config.secret_key_base = nil # TODO: follow instructions below
+  config.secret_key_salt = nil # TODO: follow instructions below
 end
 ```
 
+### How to pass secrets
 `secret_key_base` and `secret_key_salt` should be supplied via environment variables or a secret
 management system.
 
+### How to generate secrets
 To generate a `secret_key_base`, execute `bundle exec rails secret` in the terminal prompt.
+
 To generate a `secret_key_salt`, execute the following command in the Rails console prompt:
 ```ruby
 SecureRandom.random_bytes(
