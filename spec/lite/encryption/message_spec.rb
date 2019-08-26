@@ -3,24 +3,22 @@
 require 'spec_helper'
 
 RSpec.describe Lite::Encryption::Message do
-  let(:decrypted_value) { 'test' }
+  let(:message) { 'test' }
 
   describe '.decrypt' do
-    it 'returns decrypted_value' do
-      # rubocop:disable Metrics/LineLength
-      encrypted_value = 'cFJUa3h1eXY3NndlT2k5RGpLYWtJQT09LS1PSFVvQXllamNhWkFpVjFkdEFsaEtnPT0=--5cb3b4fad8e12331770d8b45163597f3af8ca639'
-      transduced_value = described_class.decrypt(encrypted_value)
-      # rubocop:enable Metrics/LineLength
+    it 'returns message' do
+      encrypted_value = described_class.encrypt(message)
+      decrypted_value = described_class.decrypt(encrypted_value)
 
-      expect(transduced_value).to eq(decrypted_value)
+      expect(decrypted_value).to eq(message)
     end
   end
 
   describe '.encrypt' do
-    it 'returns true when encrypted includes "=--"' do
-      transduced_value = described_class.encrypt(decrypted_value)
+    it 'returns true when encrypted message includes "=--"' do
+      encrypted_value = described_class.encrypt(message)
 
-      expect(transduced_value.include?('=--')).to eq(true)
+      expect(encrypted_value.include?('=--')).to eq(true)
     end
   end
 

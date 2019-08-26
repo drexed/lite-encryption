@@ -25,6 +25,7 @@ Or install it yourself as:
 ## Table of Contents
 
 * [Configurations](#configurations)
+* [Key](#key)
 * [Message](#message)
 * [Attribute](#attribute)
 
@@ -35,23 +36,18 @@ Or install it yourself as:
 
 ```ruby
 Lite::Encryption.configure do |config|
-  config.secret_key_base = nil # TODO: follow instructions below
-  config.secret_key_salt = nil # TODO: follow instructions below
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
+  config.secret_key_salt = ENV['SECRET_KEY_SALT']
 end
 ```
 
-### How to pass secrets
-`secret_key_base` and `secret_key_salt` should be supplied via environment variables or a secret
-management system.
+## Key
 
-### How to generate secrets
-To generate a `secret_key_base`, execute `bundle exec rails secret` in the terminal prompt.
+Use the following to generate a base and salt key.
 
-To generate a `secret_key_salt`, execute the following command in the Rails console prompt:
 ```ruby
-SecureRandom.random_bytes(
-  ActiveSupport::MessageEncryptor.key_len
-)
+Lite::Encryption::Key.generate_base #=> "b912e83c02b44122e31809a7435bc91e2e48c88742365aaccb07283eeb0379909e9aa09d64fc27cb5f20c3f072cd69aacd57518916799c00d41d94c06c916f5c"
+Lite::Encryption::Key.generate_salt #=> "\xD5\x8C\xB6\x14\xAC\xC7-&\xAEu\xDDj\x80/\xDF\x15\xD1\xB2\x13\x04\x85\b\x8F\xC6ZQ`Z\xC7\xD4q\xDE"
 ```
 
 ## Message

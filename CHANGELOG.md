@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2019-08-26
+### Added
+- Key class for key generation
+### Changed
+- Update initializer file
+
 ## [1.0.0] - 2019-08-24
 ### Added
 - Initial project version
