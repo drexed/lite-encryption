@@ -10,9 +10,9 @@ Gem::Specification.new do |spec|
   spec.authors = ['Juan Gomez']
   spec.email = %w[j.gomez@drexed.com]
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   spec.summary = 'ActiveSupport::MessageEncryptor encryption wrapper for PORO objects and ActiveModel attributes'
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
   spec.homepage = 'http://drexed.github.io/lite-encryption'
   spec.license = 'MIT'
 
