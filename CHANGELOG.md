@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2019-08-26
+## [1.0.1] - 2020-07-03
+### Added
+- Added Ruby 2.7 support
+
+## [1.0.1] - 2019-08-26
 ### Added
 - Key class for key generation
 ### Changed

@@ -29,11 +29,11 @@ module Lite
       end
 
       def decrypt(value, opts = {})
-        encryptor.decrypt_and_verify(value, opts)
+        encryptor.decrypt_and_verify(value, **opts)
       end
 
       def encrypt(value, opts = {})
-        encryptor.encrypt_and_sign(value, opts)
+        encryptor.encrypt_and_sign(value, **opts)
       end
 
       private
