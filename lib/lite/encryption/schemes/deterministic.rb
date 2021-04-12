@@ -9,25 +9,27 @@ module Lite
 
         extend Lite::Encryption::Helpers::ClassMethods
 
-        CIPHER = OpenSSL::Cipher.new('aes-256-cbc')
-
         def encrypt(value, _opts = {})
           encoded_value = crypt(:encrypt, value)
-          Base64.encode64(encoded_value)
+          Base64.strict_encode64(encoded_value)
         end
 
         def decrypt(value, _opts = {})
-          decoded_value = Base64.decode64(value)
+          decoded_value = Base64.strict_decode64(value)
           crypt(:decrypt, decoded_value)
         end
 
         private
 
+        def scheme
+          @scheme ||= OpenSSL::Cipher.new(Lite::Encryption::Key::ALGORITHM)
+        end
+
         def crypt(cipher_method, value)
-          CIPHER.send(cipher_method)
-          CIPHER.pkcs5_keyivgen(Lite::Encryption.configuration.secret_key_base)
-          result = CIPHER.update(value)
-          result << CIPHER.final
+          scheme.send(cipher_method)
+          scheme.key = "\x03\x11\xD4\xE7\x98+\x7F\xE7\xC0\xC4\xA3\xA5\x9A\xFC\x02=\x8A\x86<\xF1\xB1p\n\xFBa\xB9o\fwf\x1A\xF7"
+          scheme.iv = "\x00\x9A\xDB\xDC\xEDF\xF5\x1Aqd\xDDQ"
+          scheme.update(value)
         end
 
       end

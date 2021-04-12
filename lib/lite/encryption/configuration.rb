@@ -5,10 +5,13 @@ module Lite
 
     class Configuration
 
-      attr_accessor :secret_key_base, :secret_key_salt
+      ALGORITHM = 'aes-256-gcm'.freeze
+
+      attr_accessor :secret_key_base, :secret_key_iv, :secret_key_salt
 
       def initialize
         @secret_key_base = Lite::Encryption::Key.generate_base
+        @secret_key_iv = Lite::Encryption::Key.generate_iv
         @secret_key_salt = Lite::Encryption::Key.generate_salt
       end
 

@@ -4,11 +4,11 @@ require 'spec_helper'
 
 RSpec.describe Lite::Encryption::Schemes::Deterministic do
   let(:decrypted_message) { 'test' }
-  let(:encrypted_message) { "pV/MDae3cUS9gzukG9j0yA==\n" }
+  let(:encrypted_message) { 'rW8QbA==' }
 
-  before { Lite::Encryption.configuration.secret_key_base = CreditCard::DETERMINISTIC_KEY }
-
-  after { Lite::Encryption.reset_configuration! }
+  # before { Lite::Encryption.configuration.secret_key_base = CreditCard::DETERMINISTIC_KEY }
+  #
+  # after { Lite::Encryption.reset_configuration! }
 
   describe '.decrypt' do
     it 'returns decrypted_message' do

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Lite::Encryption::Message do
   let(:decrypted_message) { 'test' }
-  let(:encrypted_message) { "pV/MDae3cUS9gzukG9j0yA==\n" }
+  let(:encrypted_message) { "rW8QbA==" }
 
   before { Lite::Encryption.configuration.secret_key_base = CreditCard::DETERMINISTIC_KEY }
 
@@ -12,7 +12,7 @@ RSpec.describe Lite::Encryption::Message do
 
   describe '#crypting' do
     context 'when crypting using a deterministic scheme' do
-      it 'returns message' do
+      it 'returns decrypted_message' do
         encrypted_value = described_class.encrypt(decrypted_message, deterministic: true)
         expect(encrypted_value).to eq(encrypted_message)
 
@@ -22,7 +22,7 @@ RSpec.describe Lite::Encryption::Message do
     end
 
     context 'when crypting using a non-deterministic scheme' do
-      it 'returns message' do
+      it 'returns decrypted_message' do
         encrypted_value = described_class.encrypt(decrypted_message)
         expect(encrypted_value).not_to eq(decrypted_message)
         expect(encrypted_value).not_to eq(encrypted_message)

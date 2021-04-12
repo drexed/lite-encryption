@@ -7,29 +7,27 @@ module Lite
       extend Lite::Encryption::Helpers::ClassMethods
 
       def decrypt(value, opts = {})
-        if opts.delete(:deterministic)
-          deterministic_encryptor.decrypt(value, **opts)
-        else
-          non_deterministic_encryptor.decrypt(value, **opts)
-        end
+        scheme = scheme_by_option(opts)
+        scheme.decrypt(value, **opts)
       end
 
       def encrypt(value, opts = {})
-        if opts.delete(:deterministic)
-          deterministic_encryptor.encrypt(value, **opts)
-        else
-          non_deterministic_encryptor.encrypt(value, **opts)
-        end
+        scheme = scheme_by_option(opts)
+        scheme.encrypt(value, **opts)
       end
 
       private
 
-      def deterministic_encryptor
-        @deterministic_encryptor ||= Lite::Encryption::Schemes::Deterministic.new
+      def deterministic_scheme
+        @deterministic_scheme ||= Lite::Encryption::Schemes::Deterministic.new
       end
 
-      def non_deterministic_encryptor
-        @non_deterministic_encryptor ||= Lite::Encryption::Schemes::NonDeterministic.new
+      def non_deterministic_scheme
+        @non_deterministic_scheme ||= Lite::Encryption::Schemes::NonDeterministic.new
+      end
+
+      def scheme_by_option(options)
+        options.delete(:deterministic) ? deterministic_scheme : non_deterministic_scheme
       end
 
     end
