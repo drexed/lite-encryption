@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+%w[key_generator message_encryptor message_verifier].each do |filename|
+  require "active_support/#{filename}"
+end
+
 require 'lite/encryption/version'
 
 %w[key configuration].each do |filename|

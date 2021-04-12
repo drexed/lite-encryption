@@ -1,28 +1,36 @@
 # frozen_string_literal: true
 
-require 'active_support/message_encryptor'
 require 'securerandom'
 
 module Lite
   module Encryption
     class Key
 
-      ALGORITHM = 'aes-256-gcm'.freeze
-
-      LENGTH = ActiveSupport::MessageEncryptor.key_len
+      CIPHER = OpenSSL::Cipher.new('aes-256-gcm').freeze
+      LENGTHS = {
+        iv: CIPHER.iv_len,
+        key: CIPHER.key_len,
+        password: 16,
+        salt: CIPHER.key_len
+      }.freeze
 
       class << self
 
-        def generate_base
-          SecureRandom.hex(LENGTH * 2)
+        def generate_iv
+          SecureRandom.random_bytes(LENGTHS[:iv])
         end
 
-        def generate_iv
-          OpenSSL::Cipher.new('aes-256-gcm').random_iv
+        def generate_key
+          generator = ActiveSupport::KeyGenerator.new(generate_password)
+          generator.generate_key(generate_salt, LENGTHS[:key])
+        end
+
+        def generate_password
+          SecureRandom.hex(LENGTHS[:password])
         end
 
         def generate_salt
-          SecureRandom.random_bytes(LENGTH)
+          SecureRandom.random_bytes(LENGTHS[:salt])
         end
 
       end

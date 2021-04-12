@@ -3,19 +3,18 @@
 require 'spec_helper'
 
 RSpec.describe Lite::Encryption::Attribute do
-  let(:credit_card) { CreditCard.create!(name: decrypted_name, number: decrypted_number) }
-  let(:decrypted_number) { '1234-5678-9101-1121' }
-  let(:decrypted_name) { 'James Jones' }
+  let(:credit_card) { CreditCard.create!(email: decrypted_email, number: decrypted_number) }
+  let(:decrypted_number) { '1234-5678-9123-4567' }
 
   describe '#attr_encrypt' do
     context 'when crypting using a deterministic scheme' do
-      it 'returns encrypted_name' do
-        expect(credit_card.encrypted_name).not_to eq(decrypted_name)
+      it 'returns encrypted_email' do
+        expect(credit_card.encrypted_email).not_to eq(decrypted_email)
       end
 
-      it 'returns decrypted_name' do
-        expect(credit_card.decrypted_name).to eq(decrypted_name)
-        expect(credit_card.name).to eq(decrypted_name)
+      it 'returns decrypted_email' do
+        expect(credit_card.decrypted_email).to eq(decrypted_email)
+        expect(credit_card.email).to eq(decrypted_email)
       end
     end
 

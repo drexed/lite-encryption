@@ -37,8 +37,9 @@ Or install it yourself as:
 
 ```ruby
 Lite::Encryption.configure do |config|
-  config.secret_key_base = ENV['SECRET_KEY_BASE']
-  config.secret_key_salt = ENV['SECRET_KEY_SALT']
+  config.encryption_iv = ENV['ENCRYPTION_IV']
+  config.encryption_key = ENV['ENCRYPTION_KEY']
+  config.encryption_salt = ENV['ENCRYPTION_SALT']
 end
 ```
 
@@ -47,8 +48,10 @@ end
 Use the following to generate a base and salt key.
 
 ```ruby
-Lite::Encryption::Key.generate_base #=> "b912e83c02b44122e31809a7435bc91e2e48c88742365aaccb07283eeb0379909e9aa09d64fc27cb5f20c3f072cd69aacd57518916799c00d41d94c06c916f5c"
-Lite::Encryption::Key.generate_salt #=> "\xD5\x8C\xB6\x14\xAC\xC7-&\xAEu\xDDj\x80/\xDF\x15\xD1\xB2\x13\x04\x85\b\x8F\xC6ZQ`Z\xC7\xD4q\xDE"
+Lite::Encryption::Key.generate_iv       #=> "\x9C\x9F5<\xA5\x9B\x97\x97\xE2\x1DQ\x05"
+Lite::Encryption::Key.generate_key      #=> "y\x0Eo\xC1Gll\x05Qv\x11[\xE1vN8<\xAFxU_\xCB\xD7\x02)0\xC1#\x99\xDD4N"
+Lite::Encryption::Key.generate_password #=> "289b4997f758b31693d3315679d9fa7c"
+Lite::Encryption::Key.generate_salt     #=> "\xD2\xBA\x9B\x81@e\x99\x8BN\a7\xC2\x95)f\x97k\xC9EM\xE0x\xFBO\x9BERBD\x85%n"
 ```
 
 ## Schemes
