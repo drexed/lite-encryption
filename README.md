@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/drexed/lite-encryption.svg?branch=master)](https://travis-ci.org/drexed/lite-encryption)
 
 Lite::Encryption is a ActiveSupport::MessageEncryptor and OpenSSL::Cipher::Cipher wrapper libraries
-for encrypting and decrypting PORO objects and model attributes.
+for encrypting and decrypting PORO object values and model attributes.
 
 ## Installation
 
@@ -45,7 +45,8 @@ end
 
 ## Key
 
-Use the following to generate a base and salt key.
+Use the following to generate encryption values that you can then add to your
+credentials or ENV variables.
 
 ```ruby
 Lite::Encryption::Key.generate_iv       #=> "\x9C\x9F5<\xA5\x9B\x97\x97\xE2\x1DQ\x05"
