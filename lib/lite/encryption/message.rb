@@ -1,45 +1,35 @@
 # frozen_string_literal: true
 
-%w[key_generator message_encryptor message_verifier].each do |filename|
-  require "active_support/#{filename}"
-end
-
 module Lite
   module Encryption
     class Message
 
-      KEY ||= ActiveSupport::KeyGenerator.new(
-        Lite::Encryption.configuration.secret_key_base
-      ).generate_key(
-        Lite::Encryption.configuration.secret_key_salt,
-        ActiveSupport::MessageEncryptor.key_len
-      ).freeze
-
-      private_constant :KEY
-
-      class << self
-
-        %i[decrypt encrypt].each do |name|
-          define_method(name) do |value, opts = {}|
-            klass = new
-            klass.send(name, value, opts)
-          end
-        end
-
-      end
+      extend Lite::Encryption::Helpers::ClassMethods
 
       def decrypt(value, opts = {})
-        encryptor.decrypt_and_verify(value, **opts)
+        if opts.delete(:deterministic)
+          deterministic_encryptor.decrypt(value, **opts)
+        else
+          non_deterministic_encryptor.decrypt(value, **opts)
+        end
       end
 
       def encrypt(value, opts = {})
-        encryptor.encrypt_and_sign(value, **opts)
+        if opts.delete(:deterministic)
+          deterministic_encryptor.encrypt(value, **opts)
+        else
+          non_deterministic_encryptor.encrypt(value, **opts)
+        end
       end
 
       private
 
-      def encryptor
-        @encryptor ||= ActiveSupport::MessageEncryptor.new(KEY)
+      def deterministic_encryptor
+        @deterministic_encryptor ||= Lite::Encryption::Schemes::Deterministic.new
+      end
+
+      def non_deterministic_encryptor
+        @non_deterministic_encryptor ||= Lite::Encryption::Schemes::NonDeterministic.new
       end
 
     end

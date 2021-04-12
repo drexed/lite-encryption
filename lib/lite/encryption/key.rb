@@ -7,7 +7,7 @@ module Lite
   module Encryption
     class Key
 
-      LENGTH ||= ActiveSupport::MessageEncryptor.key_len
+      LENGTH = ActiveSupport::MessageEncryptor.key_len
 
       class << self
 

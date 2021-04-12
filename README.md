@@ -3,8 +3,8 @@
 [![Gem Version](https://badge.fury.io/rb/lite-encryption.svg)](http://badge.fury.io/rb/lite-encryption)
 [![Build Status](https://travis-ci.org/drexed/lite-encryption.svg?branch=master)](https://travis-ci.org/drexed/lite-encryption)
 
-Lite::Encryption is a ActiveSupport::MessageEncryptor wrapper library for encrypting and decrypting
-PORO objects and model attributes.
+Lite::Encryption is a ActiveSupport::MessageEncryptor and OpenSSL::Cipher::Cipher wrapper libraries
+for encrypting and decrypting PORO objects and model attributes.
 
 ## Installation
 
@@ -26,6 +26,7 @@ Or install it yourself as:
 
 * [Configurations](#configurations)
 * [Key](#key)
+* [Schemes](#schemes)
 * [Message](#message)
 * [Attribute](#attribute)
 
@@ -50,10 +51,29 @@ Lite::Encryption::Key.generate_base #=> "b912e83c02b44122e31809a7435bc91e2e48c88
 Lite::Encryption::Key.generate_salt #=> "\xD5\x8C\xB6\x14\xAC\xC7-&\xAEu\xDDj\x80/\xDF\x15\xD1\xB2\x13\x04\x85\b\x8F\xC6ZQ`Z\xC7\xD4q\xDE"
 ```
 
+## Schemes
+
+The non-deterministic message class is the wrapper class for `ActiveSupport::MessageEncryptor` so
+you can pass it accepted options.
+
+The deterministic message class is the wrapper class for `OpenSSL::Cipher::Cipher` so
+you can pass it accepted options.
+
+```ruby
+Lite::Encryption::Schemes::NonDeterministic.encrypt('decrypted_text', purpose: 'sec-pur')
+Lite::Encryption::Schemes::NonDeterministic.decrypt('==encrypted_text')
+
+# - or -
+
+service = Lite::Encryption::Deterministic.new
+
+service.encrypt('decrypted_text')
+service.decrypt('==encrypted_text')
+```
+
 ## Message
 
-The message class is the wrapper class for `ActiveSupport::MessageEncryptor` so you can pass it
-accepted options.
+The message class is the wrapper class for both schemes so you can pass it accepted options.
 
 ```ruby
 Lite::Encryption::Message.encrypt('decrypted_text', purpose: 'sec-pur')
@@ -65,6 +85,18 @@ service = Lite::Encryption::Message.new
 
 service.encrypt('decrypted_text', expires_in: 2.hours)
 service.decrypt('==encrypted_text')
+
+# - or -
+
+Lite::Encryption::Message.encrypt('decrypted_text', deterministic: true)
+Lite::Encryption::Message.decrypt('==encrypted_text', deterministic: true)
+
+# - or -
+
+service = Lite::Encryption::Message.new
+
+service.encrypt('decrypted_text', deterministic: true)
+service.decrypt('==encrypted_text', deterministic: true)
 ```
 
 ## Attribute
@@ -78,6 +110,7 @@ encrypt and decrypt your values.
 class CreditCard < ActiveRecord::Base
   extend Lite::Encryption::Attribute
 
+  attr_encrypt :name, deterministic: true
   attr_encrypt :number, :cvv, purpose: 'payment-menthod'
 
 end
