@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'rails/generators'
+require 'active_record'
 require 'lite/encryption'
 require 'generator_spec'
-require 'active_record'
 
 Lite::Encryption.reset_configuration!
 

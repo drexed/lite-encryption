@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-%w[key_generator message_encryptor message_verifier].each do |filename|
-  require "active_support/#{filename}"
+unless defined?(ActiveSupport)
+  require 'active_support/key_generator'
+  require 'active_support/message_encryptor'
+  require 'active_support/message_verifier'
 end
+
+require 'generators/lite/encryption/install_generator' if defined?(Rails::Generators)
 
 require 'lite/encryption/version'
 
@@ -19,5 +23,3 @@ end
 %w[message attribute].each do |filename|
   require "lite/encryption/#{filename}"
 end
-
-require 'generators/lite/encryption/install_generator'

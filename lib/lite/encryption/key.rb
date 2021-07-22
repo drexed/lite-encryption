@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'securerandom'
+require 'openssl' unless defined?(OpenSSL)
+require 'securerandom' unless defined?(SecureRandom)
 
 module Lite
   module Encryption
