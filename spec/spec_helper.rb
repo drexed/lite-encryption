@@ -3,8 +3,9 @@
 require 'bundler/setup'
 require 'rails/generators'
 require 'active_record'
-require 'lite/encryption'
 require 'generator_spec'
+
+require 'lite/encryption'
 
 Lite::Encryption.reset_configuration!
 

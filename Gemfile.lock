@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lite-encryption (1.2.1)
+    lite-encryption (1.2.2)
       activesupport
 
 GEM

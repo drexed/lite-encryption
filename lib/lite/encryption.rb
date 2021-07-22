@@ -9,17 +9,10 @@ end
 require 'generators/lite/encryption/install_generator' if defined?(Rails::Generators)
 
 require 'lite/encryption/version'
-
-%w[key configuration].each do |filename|
-  require "lite/encryption/#{filename}"
-end
-
+require 'lite/encryption/key'
+require 'lite/encryption/configuration'
 require 'lite/encryption/helpers/class_methods'
-
-%w[deterministic non_deterministic].each do |filename|
-  require "lite/encryption/schemes/#{filename}"
-end
-
-%w[message attribute].each do |filename|
-  require "lite/encryption/#{filename}"
-end
+require 'lite/encryption/schemes/deterministic'
+require 'lite/encryption/schemes/non_deterministic'
+require 'lite/encryption/message'
+require 'lite/encryption/attribute'
