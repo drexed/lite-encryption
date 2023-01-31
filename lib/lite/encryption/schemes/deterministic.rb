@@ -20,7 +20,13 @@ module Lite
         private
 
         def cipher
-          @cipher ||= Lite::Encryption::Key::CIPHER.dup
+          @cipher ||= begin
+            Lite::Encryption::Key::CIPHER.dup
+          rescue OpenSSL::Cipher::CipherError => e
+            throw e unless e.message == 'not able to copy ctx'
+
+            OpenSSL::Cipher.new('aes-256-gcm')
+          end
         end
 
         def crypt(cipher_method, value)
