@@ -23,6 +23,7 @@ module Lite
           @cipher ||= begin
             Lite::Encryption::Key::CIPHER.dup
           rescue OpenSSL::Cipher::CipherError => e
+            puts e.message
             throw e unless e.message != 'not able to copy ctx'
 
             OpenSSL::Cipher.new('aes-256-gcm')
